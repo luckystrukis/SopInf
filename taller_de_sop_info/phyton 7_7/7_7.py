@@ -1,8 +1,8 @@
 
 import pandas as pd
-barrios = pd.read_csv("contenido/barrios.csv", sep=",", engine="python")
-comunas = pd.read_csv("contenido/comunas.csv", sep=",", engine="python")
-casos = pd.read_csv("contenido/casos.csv", sep=",", engine="python")
+barrios = pd.read_csv("content/barrios.csv", sep=",", engine="python")
+comunas = pd.read_csv("content/comunas.csv", sep=",", engine="python")
+casos = pd.read_csv("content/casos.csv", sep=",", engine="python")
 
 # 1
 
@@ -69,7 +69,7 @@ print(barrios[condicion].index)
 
 barrioscasosmenoredad= casos["barrio"][casos.edad < 18].dropna().drop_duplicates().tolist()
 condicion = barrios.barrio.isin(barrioscasosmenoredad)
-print(barrios[["nombre"]][condicion])
+print(barrios[["barrio"]][condicion])
 print(barrios[condicion].index)
 
 #12
