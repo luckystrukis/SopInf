@@ -11,6 +11,6 @@ if not rostro.all():
 else:
     print(rostro)
 for (x,y,anch,alto) in rostro:
-cv2.rectangle(image,(x,y),(rostro[0]+rostro[2],rostro[1]+rostro[3],0,255,255),2)
-rostro = copia_imagen[y:rostro[1]+rostro[3],x:rostro[0]+rostro[2]]
-cv2.imwrite(rostro.jpg, rostro)
+    cv2.rectangle(image,(x,y),(rostro[0]+rostro[2],rostro[1]+rostro[3],0,255,255),2)
+    rostro = copia_imagen[y:rostro[1]+rostro[3],x:rostro[0]+rostro[2]]
+    cv2.imwrite(rostro.jpg, rostro)
