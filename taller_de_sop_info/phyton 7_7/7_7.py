@@ -81,7 +81,7 @@ print(casos[condicion].index)
 
 #13
 
-barriosmenoracuatro = barrios["barrio"][barrios.index != 3].dropna().drop_duplicates().tolist()
+barriosmenoracuatro = barrios["barrio"][barrios.index != 13].dropna().drop_duplicates().tolist()
 condicion = casos.barrio.isin(barriosmenoracuatro)
 print(casos[["numero_de_caso", "genero", "edad"]][condicion])
 print(casos[condicion].index)
