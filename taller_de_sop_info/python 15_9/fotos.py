@@ -18,18 +18,18 @@ for i in range(101):
         diccionario = {'nombre': "foto_rostros_" +
                        str(i), 'numero rostros': str(ROSTROS)}
         dataframecant = pd.DataFrame(
-            diccionario, columns=['nombre', 'numero rostros'], index=[i])
+            diccionario, columns=['index', 'nombre', 'numero rostros'], index=[i])
     else:
         diccionario = {'nombre': "foto_rostros_" +
                        str(i), 'numero rostros': str(ROSTROS)}
         dataframe2cant = pd.DataFrame(
-            diccionario, columns=['nombre', 'numero rostros'], index=[i])
+            diccionario, columns=['index', 'nombre', 'numero rostros'], index=[i])
         dataframecant = pd.concat([dataframecant, dataframe2cant])
     if i == 0:
         diccionario = {'nombre': "foto_rostros_" +
                        str(i) + ".jpg", 'posicion x': str(x), 'posicion y': str(y)}
         dataframe = pd.DataFrame(diccionario, columns=[
-                                 'nombre', 'posicion x', 'posicion y'], index=[i])
+                                 'index', 'nombre', 'posicion x', 'posicion y'], index=[i])
     else:
         diccionario = {'nombre': "foto_rostros_" +
                        str(i) + ".jpg", 'posicion x': str(x), 'posicion y': str(y)}
