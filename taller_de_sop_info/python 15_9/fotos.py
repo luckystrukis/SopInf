@@ -40,4 +40,5 @@ for i in range(101):
 print(dataframe)
 dataframe.index.name = 'id'
 dataframe.to_csv("fotos.csv")
+dataframecant.index.name = 'id'
 dataframecant.to_csv("fotoscant.csv")
