@@ -63,6 +63,18 @@ dataframefinal = pd.concat(
 dataframefinal.to_csv(ruta_completa + "final.csv", index=False)
 df2 = dataframefinal[(dataframefinal["Categoria"] == "Editoriales de Libros")]
 
-diccionariocants = {'Cantidad total de registros': len(dataframefinal.index)}
+Diarios =  dataframediarios.groupby('Provincia').count()
+Diarios = Diarios[['Categoria']]
+Diarios.columns = ['Diarios']
 
-print(diccionariocants)
+Editoriales =  dataframeeditoriales.groupby('Provincia').count()
+Editoriales = Editoriales[['Categoria']]
+Editoriales.columns = ['Editoriales']
+
+
+cines =  dataframecines.groupby('Provincia').count()
+cines2 = cines[['Categoria']]
+cines2.columns = ['cines']
+
+finalfinal = pd.concat([Editoriales, Diarios, cines2])
+print(finalfinal)
