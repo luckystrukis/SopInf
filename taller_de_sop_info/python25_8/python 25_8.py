@@ -23,8 +23,7 @@ def ObtenerPagina(pagina):
 
     return objeto_sopa.find("a", {"class": "btn-green"}).get("href")
 
-
-
+"""
 for x in range(3):
     print("de que pagina quiere el dataset:")
     pagina = input()
@@ -37,7 +36,7 @@ for x in range(3):
         str(ruta_base) + "/taller_de_sop_info/python25_8/" + nombre + ".csv")
     df = pd.read_csv(StringIO(str(csv)), sep=",")
     df.to_csv(ruta_completa, index=False)
-
+"""
 ruta_base = Path.cwd()
 ruta_completa = str(
     str(ruta_base) + "/taller_de_sop_info/python25_8/")
@@ -83,7 +82,7 @@ Cines.columns = ['Salas de cine']
 
 finalfinal = pd.concat([Editoriales, Diarios, Cines], axis=1)
 
-finalfinal.to_csv(ruta_completa + "provincias.csv", index=False)
+finalfinal.to_csv(ruta_completa + "provincias.csv", index=True)
 
 #pantallas, butacas, espacio_incaa, provincia
 
@@ -98,4 +97,6 @@ finalfinalsum = pd.concat([sumpantallas, sumbutacas, cinesincaa], axis=1)
 finalfinalsum = finalfinalsum.rename(columns={
                                      "pantallas": "Cant. de Pantallas", "butacas": "Cant. de butacas", "espacio_incaa": "Cant. de espacios INCAA"})
 
-finalfinalsum.to_csv(ruta_completa + "cinessumas.csv", index=False)
+finalfinalsum.to_csv(ruta_completa + "cinessumas.csv", index=True)
+
+print(finalfinalsum)
