@@ -1,4 +1,6 @@
 from io import StringIO
+from operator import index
+from matplotlib.pyplot import axis
 import requests
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -9,7 +11,7 @@ diarios
 https://datos.gob.ar/dataset/cultura-mapa-cultural-agentes-actividades-culturales/archivo/cultura_0d1b731b-28c9-4402-a7eb-018c9cf8958b
 editoriales
 https://datos.gob.ar/dataset/cultura-mapa-cultural-agentes-actividades-culturales/archivo/cultura_2bcb7ee9-1c75-4a37-adec-2e8c822d2e3d
-cine
+cines
 https://datos.gob.ar/dataset/cultura-mapa-cultural-espacios-culturales/archivo/cultura_f7a8edb8-9208-41b0-8f19-d72811dcea97
 """
 
@@ -22,7 +24,7 @@ def ObtenerPagina(pagina):
     return objeto_sopa.find("a", {"class": "btn-green"}).get("href")
 
 
-"""
+
 for x in range(3):
     print("de que pagina quiere el dataset:")
     pagina = input()
@@ -35,7 +37,7 @@ for x in range(3):
         str(ruta_base) + "/taller_de_sop_info/python25_8/" + nombre + ".csv")
     df = pd.read_csv(StringIO(str(csv)), sep=",")
     df.to_csv(ruta_completa, index=False)
-"""
+
 ruta_base = Path.cwd()
 ruta_completa = str(
     str(ruta_base) + "/taller_de_sop_info/python25_8/")
@@ -63,18 +65,37 @@ dataframefinal = pd.concat(
 dataframefinal.to_csv(ruta_completa + "final.csv", index=False)
 df2 = dataframefinal[(dataframefinal["Categoria"] == "Editoriales de Libros")]
 
-Diarios =  dataframediarios.groupby('Provincia').count()
+diccionariodiarios = {'Cod_Loc': diarios["Cod_Loc"], 'IdProvincia': diarios["IdProvincia"], 'IdDepartamento': diarios["IdDepartamento"], 'Categoria': diarios["CategorÃ­a"], 'Provincia': diarios["Provincia"],
+                      'Localidad': diarios["Localidad"], 'Nombre': diarios["Nombre"], 'Domicilio': diarios["Domicilio"], 'CP': diarios["CP"], 'Telefono': diarios["TelÃ©fono"], 'Mail': diarios["Mail"], 'Web': diarios["Web"]}
+
+Diarios = dataframediarios.groupby('Provincia').count()
 Diarios = Diarios[['Categoria']]
 Diarios.columns = ['Diarios']
 
-Editoriales =  dataframeeditoriales.groupby('Provincia').count()
+Editoriales = dataframeeditoriales.groupby('Provincia').count()
 Editoriales = Editoriales[['Categoria']]
 Editoriales.columns = ['Editoriales']
 
 
-cines =  dataframecines.groupby('Provincia').count()
-cines2 = cines[['Categoria']]
-cines2.columns = ['cines']
+Cines = dataframecines.groupby('Provincia').count()
+Cines = Cines[['Categoria']]
+Cines.columns = ['Salas de cine']
 
-finalfinal = pd.concat([Editoriales, Diarios, cines2])
-print(finalfinal)
+finalfinal = pd.concat([Editoriales, Diarios, Cines], axis=1)
+
+finalfinal.to_csv(ruta_completa + "provincias.csv", index=False)
+
+#pantallas, butacas, espacio_incaa, provincia
+
+sumpantallas = cines.groupby(['provincia']).agg({'pantallas': 'sum'})
+
+sumbutacas = cines.groupby(['provincia']).agg({'butacas': 'sum'})
+
+cinesincaa = cines.groupby(['provincia']).agg({'espacio_incaa': 'count'})
+
+finalfinalsum = pd.concat([sumpantallas, sumbutacas, cinesincaa], axis=1)
+
+finalfinalsum = finalfinalsum.rename(columns={
+                                     "pantallas": "Cant. de Pantallas", "butacas": "Cant. de butacas", "espacio_incaa": "Cant. de espacios INCAA"})
+
+finalfinalsum.to_csv(ruta_completa + "cinessumas.csv", index=False)
